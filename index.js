@@ -21,7 +21,7 @@ async function run() {
     try {
         await client.connect();
         const productCollection = client.db(`green2424`).collection('products');
-        const totalCollection = client.db(`green2424`).collection('total');
+
         console.log(`DB Connected`);
         app.get('/products', async (req, res) => {
             const query = {};
@@ -54,20 +54,17 @@ async function run() {
             const updateDoc = {
                 $set: {
                     quantity,
-
                 },
             };
             const result = await productCollection.updateOne(query, updateDoc, options);
             res.send(result);
         })
 
-        // Total Collection CLuster
-        app.get('/total', async (req, res) => {
-            const id = (req.query.id);
-            const query = {};
-            const result = await productCollection.find(query);
-            res.send({ result });
-
+        // add item
+        app.post('/products', async (req, res) => {
+            const newItem = req.body;
+            const result = await productCollection.insertOne(newItem);
+            res.send(result);
         })
 
     }
