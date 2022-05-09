@@ -55,7 +55,20 @@ async function run() {
                 $set: {
                     quantity,
 
-  
+                },
+            };
+            const result = await productCollection.updateOne(query, updateDoc, options);
+            res.send(result);
+        })
+
+        // Total Collection CLuster
+        app.get('/total', async (req, res) => {
+            const id = (req.query.id);
+            const query = {};
+            const result = await productCollection.find(query);
+            res.send({ result });
+
+        })
 
     }
 
