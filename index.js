@@ -56,7 +56,9 @@ async function run() {
                     quantity,
 
                 },
-            
+            };
+            const result = await productCollection.updateOne(query, updateDoc, options);
+            res.send(result);
         })
 
         // Total Collection CLuster
